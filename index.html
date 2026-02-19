@@ -1,0 +1,992 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shrawan Malyala — Senior AI Engineer</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  @page { size: A4; margin: 0; }
+
+  :root {
+    --paper: #fcfaf6;
+    --bg: #eae6df;
+    --ink: #1a1814;
+    --ink2: #4a463e;
+    --ink3: #8a857b;
+    --ink4: #b5b0a6;
+    --rule: #d8d3ca;
+    --rule2: #ece8e1;
+    --accent: #8b3a2a;
+    --accent2: #2a5a4a;
+    --accent3: #3a4a7a;
+    --warm: #c4915a;
+    --sidebar: #f4f1ec;
+    --tag-bg: #efeae3;
+    --shadow: rgba(30, 26, 20, 0.06);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'IBM Plex Sans', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.55;
+    font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  ::selection { background: var(--accent); color: #fff; }
+
+  /* ═══ FLOATING NAV ═══ */
+  nav {
+    position: fixed;
+    top: 16px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 200;
+    display: flex;
+    gap: 0.2rem;
+    padding: 0.35rem;
+    background: rgba(252, 250, 246, 0.85);
+    backdrop-filter: blur(20px) saturate(180%);
+    border: 1px solid var(--rule);
+    border-radius: 100px;
+    box-shadow: 0 2px 20px var(--shadow), 0 0 0 1px rgba(255,255,255,0.5) inset;
+    transition: opacity 0.3s, transform 0.35s cubic-bezier(0.4,0,0.2,1);
+  }
+
+  nav.hidden { opacity: 0; transform: translateX(-50%) translateY(-20px); pointer-events: none; }
+
+  nav a {
+    text-decoration: none;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.65rem;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--ink3);
+    padding: 0.4rem 0.9rem;
+    border-radius: 100px;
+    transition: all 0.25s;
+  }
+
+  nav a:hover { color: var(--accent); background: rgba(139, 58, 42, 0.06); }
+
+  /* ═══ RESUME PAPER ═══ */
+  .resume {
+    max-width: 1020px;
+    margin: 0 auto;
+    padding: 20px 20px 40px;
+  }
+
+  .paper {
+    background: var(--paper);
+    border-radius: 3px;
+    box-shadow:
+      0 1px 3px var(--shadow),
+      0 8px 40px var(--shadow),
+      0 30px 80px rgba(30,26,20,0.04);
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Page texture */
+  .paper::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: url("data:image/svg+xml,%3Csvg width='100' height='100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='0.8' numOctaves='4' type='fractalNoise'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.02'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  /* Decorative sidebar stripe */
+  .paper::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 6px;
+    background: linear-gradient(180deg, var(--accent), var(--accent2), var(--accent3));
+    z-index: 2;
+  }
+
+  /* ═══ HEADER ═══ */
+  .header {
+    padding: 3.5rem 3.5rem 2.5rem 3.5rem;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: start;
+    gap: 2rem;
+    border-bottom: 2px solid var(--ink);
+    position: relative;
+    z-index: 3;
+  }
+
+  .header-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.8rem, 5vw, 4rem);
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -0.03em;
+    color: var(--ink);
+    margin-bottom: 0.3rem;
+  }
+
+  .header-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.15rem;
+    font-weight: 500;
+    font-style: italic;
+    color: var(--accent);
+    letter-spacing: 0.02em;
+    margin-bottom: 1rem;
+  }
+
+  .header-summary {
+    font-size: 0.82rem;
+    color: var(--ink2);
+    max-width: 520px;
+    line-height: 1.65;
+  }
+
+  .header-contact {
+    text-align: right;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    padding-top: 0.25rem;
+  }
+
+  .header-contact a, .header-contact span {
+    text-decoration: none;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--ink3);
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 0.5rem;
+    transition: color 0.2s;
+    white-space: nowrap;
+  }
+
+  .header-contact a:hover { color: var(--accent); }
+
+  .header-contact .icon {
+    width: 14px;
+    text-align: center;
+    flex-shrink: 0;
+    font-size: 0.7rem;
+    color: var(--ink4);
+  }
+
+  /* ═══ BODY LAYOUT ═══ */
+  .body {
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    min-height: 600px;
+    position: relative;
+    z-index: 3;
+  }
+
+  /* ── SIDEBAR ── */
+  .sidebar {
+    background: var(--sidebar);
+    padding: 2rem 1.75rem;
+    border-right: 1px solid var(--rule);
+  }
+
+  .sb-section { margin-bottom: 2rem; }
+  .sb-section:last-child { margin-bottom: 0; }
+
+  .sb-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--accent);
+    margin-bottom: 1rem;
+    padding-bottom: 0.4rem;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .sb-group { margin-bottom: 1rem; }
+  .sb-group:last-child { margin-bottom: 0; }
+
+  .sb-group-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.6rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink3);
+    margin-bottom: 0.4rem;
+  }
+
+  .sb-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3rem;
+  }
+
+  .sb-chip {
+    font-size: 0.68rem;
+    padding: 0.2rem 0.5rem;
+    border-radius: 3px;
+    background: var(--paper);
+    border: 1px solid var(--rule);
+    color: var(--ink2);
+    transition: all 0.2s;
+    cursor: default;
+  }
+
+  .sb-chip:hover {
+    background: var(--accent);
+    color: #fff;
+    border-color: var(--accent);
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(139,58,42,0.15);
+  }
+
+  /* Education in sidebar */
+  .sb-edu-item { margin-bottom: 1rem; }
+  .sb-edu-item:last-child { margin-bottom: 0; }
+
+  .sb-edu-degree {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.88rem;
+    font-weight: 600;
+    line-height: 1.3;
+    color: var(--ink);
+  }
+
+  .sb-edu-school {
+    font-size: 0.75rem;
+    color: var(--accent2);
+    font-weight: 500;
+    margin-bottom: 0.1rem;
+  }
+
+  .sb-edu-meta {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.6rem;
+    color: var(--ink3);
+  }
+
+  .sb-edu-gpa {
+    display: inline-block;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.6rem;
+    padding: 0.1rem 0.4rem;
+    border-radius: 3px;
+    background: rgba(139,58,42,0.06);
+    color: var(--accent);
+    margin-top: 0.25rem;
+  }
+
+  /* Achievements in sidebar */
+  .sb-ach { margin-bottom: 1rem; }
+  .sb-ach:last-child { margin-bottom: 0; }
+
+  .sb-ach-year {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.58rem;
+    font-weight: 500;
+    color: var(--warm);
+    letter-spacing: 0.04em;
+  }
+
+  .sb-ach-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--ink);
+    line-height: 1.3;
+    margin-bottom: 0.2rem;
+  }
+
+  .sb-ach-desc {
+    font-size: 0.7rem;
+    color: var(--ink3);
+    line-height: 1.5;
+  }
+
+  /* ── MAIN COLUMN ── */
+  .main {
+    padding: 2rem 2.5rem;
+  }
+
+  /* Section Headers */
+  .sec-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+    cursor: default;
+  }
+
+  .sec-header h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--accent);
+    white-space: nowrap;
+  }
+
+  .sec-line {
+    flex: 1;
+    height: 1px;
+    background: var(--rule);
+  }
+
+  /* ── Experience entries ── */
+  .exp {
+    margin-bottom: 1.75rem;
+    padding-bottom: 1.75rem;
+    border-bottom: 1px solid var(--rule2);
+    position: relative;
+  }
+
+  .exp:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+
+  .exp-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 1rem;
+    margin-bottom: 0.15rem;
+    flex-wrap: wrap;
+  }
+
+  .exp-role {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--ink);
+    letter-spacing: -0.01em;
+  }
+
+  .exp-date {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--ink3);
+    letter-spacing: 0.02em;
+    flex-shrink: 0;
+  }
+
+  .exp-org {
+    font-size: 0.82rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .exp-org strong {
+    color: var(--accent);
+    font-weight: 600;
+  }
+
+  .exp-org span { color: var(--ink3); }
+
+  /* Expandable bullets */
+  .exp-bullets {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .exp.open .exp-bullets { grid-template-rows: 1fr; }
+
+  .exp-bullets-inner { overflow: hidden; }
+
+  .exp-bullets ul {
+    list-style: none;
+    padding-top: 0.3rem;
+  }
+
+  .exp-bullets li {
+    position: relative;
+    padding-left: 1rem;
+    margin-bottom: 0.45rem;
+    font-size: 0.78rem;
+    color: var(--ink2);
+    line-height: 1.6;
+  }
+
+  .exp-bullets li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.5em;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: var(--accent);
+    opacity: 0.4;
+  }
+
+  .exp-bullets li strong {
+    font-weight: 600;
+    color: var(--ink);
+  }
+
+  .exp-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem;
+    margin-top: 0.7rem;
+  }
+
+  .exp-tag {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.58rem;
+    padding: 0.15rem 0.4rem;
+    border-radius: 2px;
+    background: var(--tag-bg);
+    color: var(--ink3);
+    letter-spacing: 0.02em;
+  }
+
+  .exp-expand {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.62rem;
+    color: var(--accent);
+    cursor: pointer;
+    padding: 0.25rem 0.55rem;
+    border-radius: 3px;
+    border: 1px solid rgba(139,58,42,0.15);
+    background: rgba(139,58,42,0.03);
+    transition: all 0.2s;
+    margin-top: 0.5rem;
+    letter-spacing: 0.03em;
+    user-select: none;
+  }
+
+  .exp-expand:hover {
+    background: rgba(139,58,42,0.07);
+    border-color: rgba(139,58,42,0.25);
+  }
+
+  .exp-arrow {
+    font-size: 0.55rem;
+    transition: transform 0.3s;
+  }
+
+  .exp.open .exp-arrow { transform: rotate(90deg); }
+
+  /* ── Projects ── */
+  .proj-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+
+  .proj {
+    padding: 1.25rem;
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    background: var(--sidebar);
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .proj::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .proj:hover {
+    border-color: var(--accent);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 24px var(--shadow);
+  }
+
+  .proj:hover::before { opacity: 1; }
+
+  .proj-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 0.4rem;
+  }
+
+  .proj-desc {
+    font-size: 0.74rem;
+    color: var(--ink3);
+    line-height: 1.6;
+    margin-bottom: 0.6rem;
+  }
+
+  .proj-stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem;
+  }
+
+  .proj-stack span {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.58rem;
+    padding: 0.12rem 0.4rem;
+    border-radius: 2px;
+    background: var(--paper);
+    border: 1px solid var(--rule);
+    color: var(--accent2);
+  }
+
+  /* ═══ PRINT STYLES ═══ */
+  @media print {
+    body { background: #fff; }
+    nav { display: none; }
+    .resume { padding: 0; }
+    .paper { box-shadow: none; border-radius: 0; }
+    .paper::after { display: none; }
+    .exp-expand { display: none; }
+    .exp-bullets { grid-template-rows: 1fr !important; }
+  }
+
+  /* ═══ RESPONSIVE ═══ */
+  @media (max-width: 860px) {
+    .resume { padding: 10px; }
+    .header { grid-template-columns: 1fr; padding: 2rem 1.5rem 1.5rem; }
+    .header-contact { text-align: left; flex-direction: row; flex-wrap: wrap; gap: 0.5rem; }
+    .header-contact a, .header-contact span { justify-content: flex-start; }
+    .body { grid-template-columns: 1fr; }
+    .sidebar { border-right: none; border-bottom: 1px solid var(--rule); padding: 1.5rem; }
+    .main { padding: 1.5rem; }
+    nav { top: 8px; }
+    nav a { font-size: 0.58rem; padding: 0.35rem 0.6rem; }
+    .proj-grid { grid-template-columns: 1fr; }
+  }
+
+  @media (max-width: 520px) {
+    nav { display: none; }
+    .header-name { font-size: 2.2rem; }
+  }
+
+  /* ═══ SCROLL ANIMATIONS ═══ */
+  .fade-in {
+    opacity: 0;
+    transform: translateY(16px);
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .fade-in.show {
+    opacity: 1;
+    transform: translateY(0);
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══ NAV PILL ═══ -->
+<nav id="nav">
+  <a href="#experience">Experience</a>
+  <a href="#skills-section">Skills</a>
+  <a href="#projects-section">Projects</a>
+  <a href="#contact">Contact</a>
+</nav>
+
+<!-- ═══ RESUME DOCUMENT ═══ -->
+<div class="resume">
+<div class="paper">
+
+  <!-- ── HEADER ── -->
+  <div class="header fade-in">
+    <div>
+      <h1 class="header-name">Shrawan Malyala</h1>
+      <div class="header-title">Senior AI Engineer</div>
+      <p class="header-summary">Specializing in enterprise-scale agentic LLM systems, advanced RAG pipelines, and probabilistic knowledge graphs. Proven expertise in multi-agent orchestration, custom communication protocols, and LLM evaluation & safety pipelines — bridging complex ML with scalable infrastructure.</p>
+    </div>
+    <div class="header-contact">
+      <a href="tel:+14387798020"><span class="icon">☎</span> +1 (438) 779-8020</a>
+      <a href="mailto:msaishrawan@gmail.com"><span class="icon">✉</span> msaishrawan@gmail.com</a>
+      <a href="https://linkedin.com/in/shrawansai" target="_blank"><span class="icon">in</span> linkedin.com/in/shrawansai</a>
+      <a href="https://github.com/shrawansai" target="_blank"><span class="icon">⌨</span> github.com/shrawansai</a>
+      <span><span class="icon">⊙</span> Toronto, ON (Open to relocate)</span>
+    </div>
+  </div>
+
+  <!-- ── TWO COLUMN BODY ── -->
+  <div class="body">
+
+    <!-- ════ SIDEBAR ════ -->
+    <aside class="sidebar" id="skills-section">
+
+      <!-- Skills -->
+      <div class="sb-section fade-in">
+        <div class="sb-title">Skills</div>
+
+        <div class="sb-group">
+          <div class="sb-group-label">LLM & Agentic AI</div>
+          <div class="sb-chips">
+            <span class="sb-chip">Context Engineering</span>
+            <span class="sb-chip">Multi-Agent Systems</span>
+            <span class="sb-chip">RAG</span>
+            <span class="sb-chip">GraphRAG</span>
+            <span class="sb-chip">Knowledge Graphs</span>
+            <span class="sb-chip">Semantic Routing</span>
+            <span class="sb-chip">Function Calling</span>
+            <span class="sb-chip">Memory Mgmt</span>
+            <span class="sb-chip">Chain of Thought</span>
+          </div>
+        </div>
+
+        <div class="sb-group">
+          <div class="sb-group-label">Orchestration</div>
+          <div class="sb-chips">
+            <span class="sb-chip">LangChain</span>
+            <span class="sb-chip">LangGraph</span>
+            <span class="sb-chip">LlamaIndex</span>
+            <span class="sb-chip">Google ADK</span>
+            <span class="sb-chip">MCP</span>
+            <span class="sb-chip">A2A</span>
+            <span class="sb-chip">n8n</span>
+            <span class="sb-chip">HuggingFace</span>
+          </div>
+        </div>
+
+        <div class="sb-group">
+          <div class="sb-group-label">Models & Tuning</div>
+          <div class="sb-chips">
+            <span class="sb-chip">Gemini</span>
+            <span class="sb-chip">GPT</span>
+            <span class="sb-chip">Claude</span>
+            <span class="sb-chip">Llama</span>
+            <span class="sb-chip">Command R</span>
+            <span class="sb-chip">Deepseek</span>
+            <span class="sb-chip">Gemma</span>
+            <span class="sb-chip">LoRA</span>
+            <span class="sb-chip">QLoRA</span>
+            <span class="sb-chip">PEFT</span>
+            <span class="sb-chip">RLHF</span>
+          </div>
+        </div>
+
+        <div class="sb-group">
+          <div class="sb-group-label">Languages & Dev</div>
+          <div class="sb-chips">
+            <span class="sb-chip">Python</span>
+            <span class="sb-chip">Java</span>
+            <span class="sb-chip">JavaScript</span>
+            <span class="sb-chip">SQL</span>
+            <span class="sb-chip">Cypher</span>
+            <span class="sb-chip">SPARQL</span>
+            <span class="sb-chip">PySpark</span>
+            <span class="sb-chip">FastAPI</span>
+            <span class="sb-chip">Django</span>
+            <span class="sb-chip">Flask</span>
+            <span class="sb-chip">Docker</span>
+            <span class="sb-chip">Git</span>
+          </div>
+        </div>
+
+        <div class="sb-group">
+          <div class="sb-group-label">Cloud & Data</div>
+          <div class="sb-chips">
+            <span class="sb-chip">GCP Vertex AI</span>
+            <span class="sb-chip">BigQuery</span>
+            <span class="sb-chip">Document AI</span>
+            <span class="sb-chip">AWS SageMaker</span>
+            <span class="sb-chip">Bedrock</span>
+            <span class="sb-chip">Azure ML</span>
+            <span class="sb-chip">Neo4j</span>
+            <span class="sb-chip">Redis</span>
+            <span class="sb-chip">Pinecone</span>
+            <span class="sb-chip">Milvus</span>
+            <span class="sb-chip">MongoDB</span>
+          </div>
+        </div>
+
+        <div class="sb-group">
+          <div class="sb-group-label">ML & Evaluation</div>
+          <div class="sb-chips">
+            <span class="sb-chip">NLP</span>
+            <span class="sb-chip">Computer Vision</span>
+            <span class="sb-chip">Deep Learning</span>
+            <span class="sb-chip">PyTorch</span>
+            <span class="sb-chip">TensorFlow</span>
+            <span class="sb-chip">Scikit-Learn</span>
+            <span class="sb-chip">LangSmith</span>
+            <span class="sb-chip">DeepEval</span>
+            <span class="sb-chip">LLM-as-Judge</span>
+            <span class="sb-chip">AI Safety</span>
+            <span class="sb-chip">SpaCy</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Education -->
+      <div class="sb-section fade-in">
+        <div class="sb-title">Education</div>
+        <div class="sb-edu-item">
+          <div class="sb-edu-degree">M.Sc. Applied Computer Science</div>
+          <div class="sb-edu-school">Concordia University</div>
+          <div class="sb-edu-meta">Montreal, QC · 2023–2024</div>
+          <div class="sb-edu-meta" style="color: var(--ink2); margin-top:2px;">AI, Intelligent Systems, CV, Algorithms</div>
+          <div class="sb-edu-gpa">CGPA 3.78 / 4.3</div>
+        </div>
+        <div class="sb-edu-item">
+          <div class="sb-edu-degree">B.Tech Computer Science</div>
+          <div class="sb-edu-school">VIT University</div>
+          <div class="sb-edu-meta">Vellore, India</div>
+          <div class="sb-edu-gpa">CGPA 8.4 / 10</div>
+        </div>
+      </div>
+
+      <!-- Achievements -->
+      <div class="sb-section fade-in">
+        <div class="sb-title">Awards</div>
+        <div class="sb-ach">
+          <div class="sb-ach-year">2025 · 🏆 Winner</div>
+          <div class="sb-ach-title">UN Best Climate Change & Sustainability AI Hack</div>
+          <div class="sb-ach-desc">EarthLens — AI disaster response system using Gemini & 25+ GCP services for wildfire detection & evacuation planning.</div>
+        </div>
+        <div class="sb-ach">
+          <div class="sb-ach-year">2023 · 🥇 First Place</div>
+          <div class="sb-ach-title">Morgan Stanley CodeToGive</div>
+          <div class="sb-ach-desc">Galactic-Healer — Q&A game using LangChain & GPT-3.5 for rare disease education.</div>
+        </div>
+      </div>
+
+    </aside>
+
+    <!-- ════ MAIN CONTENT ════ -->
+    <main class="main">
+
+      <!-- Experience -->
+      <div id="experience">
+        <div class="sec-header fade-in">
+          <h2>Experience</h2>
+          <div class="sec-line"></div>
+        </div>
+
+        <!-- Unilever -->
+        <div class="exp fade-in">
+          <div class="exp-top">
+            <div class="exp-role">Senior LLM Engineer</div>
+            <div class="exp-date">Jan 2025 — Present</div>
+          </div>
+          <div class="exp-org"><strong>Unilever (Horizon3 Labs)</strong> <span>· Canada</span></div>
+          <div class="exp-expand" onclick="this.closest('.exp').classList.toggle('open')">
+            <span class="exp-arrow">▸</span> Details
+          </div>
+          <div class="exp-bullets"><div class="exp-bullets-inner">
+            <ul>
+              <li>Spearheading <strong>'Tier N' Supply Chain Agent</strong> — autonomous multi-agent workflow constructing multi-tier knowledge graphs using LangChain, GraphRAG, Google Spanner Graph, and Neo4j to map complex vendor networks and enable multi-hop reasoning.</li>
+              <li>Architected <strong>'Buyers Console GPT'</strong>, a production multi-agent orchestration system (Python, FastAPI, Redis) supporting <strong>500+ daily active users</strong> and reducing query resolution time by <strong>75%</strong>.</li>
+              <li>Engineered a custom <strong>context engineering layer</strong> to manage dynamic prompt injection and shared memory state across three specialized utility sub-agents.</li>
+              <li>Designed a custom <strong>Orchestrator Communication Protocol (OACP)</strong> inspired by MCP and A2A architectures for standardized async communication, payload routing, and secure data exchange.</li>
+              <li>Co-developed a proprietary <strong>LLM distributed tracing and evaluation library</strong>, improving observability and latency tracking by 30% over Arize Phoenix.</li>
+              <li>Built <strong>'Tariff 360'</strong> utility agent using Google ADK and Vertex AI to track 450 global tariff fluctuations and forecast downstream financial impacts.</li>
+              <li>Engineered <strong>'Procurement Marketing Insights'</strong> multi-agent LangGraph framework integrating Gemini, GPT-o1, and Python sub-agents — slashing manual processing by <strong>70%</strong>.</li>
+              <li>Developed RAG pipeline for sentiment analysis processing <strong>10 years of historical data</strong> across 4,000+ data points and 700+ enterprise documents using BigQuery and Document AI.</li>
+            </ul>
+            <div class="exp-tags">
+              <span class="exp-tag">LangChain</span><span class="exp-tag">LangGraph</span><span class="exp-tag">FastAPI</span><span class="exp-tag">Redis</span><span class="exp-tag">Neo4j</span><span class="exp-tag">GraphRAG</span><span class="exp-tag">Google ADK</span><span class="exp-tag">Vertex AI</span><span class="exp-tag">Gemini</span>
+            </div>
+          </div></div>
+        </div>
+
+        <!-- Pinterest -->
+        <div class="exp fade-in">
+          <div class="exp-top">
+            <div class="exp-role">Localization Prompt Engineer</div>
+            <div class="exp-date">Aug 2025 — Present</div>
+          </div>
+          <div class="exp-org"><strong>Pinterest</strong> <span>(via Innodata) · Remote · Part-Time</span></div>
+          <div class="exp-expand" onclick="this.closest('.exp').classList.toggle('open')">
+            <span class="exp-arrow">▸</span> Details
+          </div>
+          <div class="exp-bullets"><div class="exp-bullets-inner">
+            <ul>
+              <li>Built <strong>agentic translation workflows</strong> using Python, Pydantic, and LangChain to automate transcreation with strict brand voice adherence and localized style guides.</li>
+              <li>Engineered <strong>Trust & Safety testing pipelines</strong> to systematically test LLM guardrails, generating 20 localized blocklists with 50+ targeted hazardous terms each.</li>
+              <li>Designed <strong>automated LLM evaluation pipelines</strong> for model selection via programmatic A/B testing across 5+ models.</li>
+              <li>Engineered the <strong>'Glean Agent'</strong> using advanced RAG to generate 200 localized marketing templates across 15+ regional locales.</li>
+            </ul>
+            <div class="exp-tags">
+              <span class="exp-tag">Python</span><span class="exp-tag">Pydantic</span><span class="exp-tag">LangChain</span><span class="exp-tag">RAG</span><span class="exp-tag">Trust & Safety</span>
+            </div>
+          </div></div>
+        </div>
+
+        <!-- Cohere -->
+        <div class="exp fade-in">
+          <div class="exp-top">
+            <div class="exp-role">Senior Data Quality Specialist for LLMs</div>
+            <div class="exp-date">Feb 2024 — Feb 2025</div>
+          </div>
+          <div class="exp-org"><strong>Cohere</strong> <span>· Canada · Contract</span></div>
+          <div class="exp-expand" onclick="this.closest('.exp').classList.toggle('open')">
+            <span class="exp-arrow">▸</span> Details
+          </div>
+          <div class="exp-bullets"><div class="exp-bullets-inner">
+            <ul>
+              <li>Reviewed, ranked, and audited code generated by <strong>Command R LLM</strong>, contributing to a 20% increase in data quality.</li>
+              <li>Developed classification models to score and evaluate LLM responses via <strong>systematic A/B testing</strong> to select superior model outputs.</li>
+              <li>Collaborated with ML teams to refine <strong>prompt engineering techniques</strong>, gather high-quality retrieval datasets, and optimize data pipelines.</li>
+              <li>Conducted prompt effectiveness evaluations, providing actionable feedback leading to significant error rate reduction and <strong>10% workflow efficiency improvement</strong>.</li>
+              <li>Implemented quality control measures for the <strong>Coral LLM</strong>, ensuring consistent performance and developing data quality documentation.</li>
+            </ul>
+            <div class="exp-tags">
+              <span class="exp-tag">Command R</span><span class="exp-tag">A/B Testing</span><span class="exp-tag">Prompt Eng.</span><span class="exp-tag">Data Pipelines</span>
+            </div>
+          </div></div>
+        </div>
+
+        <!-- Ansys -->
+        <div class="exp fade-in">
+          <div class="exp-top">
+            <div class="exp-role">R&D Intern — Full Stack Dev & Data Science</div>
+            <div class="exp-date">May 2023 — Dec 2023</div>
+          </div>
+          <div class="exp-org"><strong>Ansys</strong> <span>· Canada</span></div>
+          <div class="exp-expand" onclick="this.closest('.exp').classList.toggle('open')">
+            <span class="exp-arrow">▸</span> Details
+          </div>
+          <div class="exp-bullets"><div class="exp-bullets-inner">
+            <ul>
+              <li>Orchestrated comprehensive <strong>regression testing</strong> on a cloud cluster, ensuring seamless integration of Ansys projects.</li>
+              <li>Engineered bug fixes and interface enhancements to GUI-based testing tool, reducing testing time by <strong>10%+</strong>.</li>
+              <li>Worked on CI/CD pipeline for <strong>EzMerge</strong> — a scalable testing solution using Flask, JavaScript, Azure DevOps, and MongoDB — reducing manual testing by <strong>25%</strong>.</li>
+              <li>Developed automated data collection and simulation pipelines with <strong>dimensionality reduction and clustering</strong> using PyTorch.</li>
+            </ul>
+            <div class="exp-tags">
+              <span class="exp-tag">Flask</span><span class="exp-tag">Azure DevOps</span><span class="exp-tag">MongoDB</span><span class="exp-tag">PyTorch</span><span class="exp-tag">CI/CD</span>
+            </div>
+          </div></div>
+        </div>
+
+        <!-- Novartis -->
+        <div class="exp fade-in">
+          <div class="exp-top">
+            <div class="exp-role">Business Solutions Specialist ↑ & Full Stack Developer</div>
+            <div class="exp-date">Jan 2021 — Dec 2022</div>
+          </div>
+          <div class="exp-org"><strong>Novartis</strong> <span>· Hyderabad, India · Promoted</span></div>
+          <div class="exp-expand" onclick="this.closest('.exp').classList.toggle('open')">
+            <span class="exp-arrow">▸</span> Details
+          </div>
+          <div class="exp-bullets"><div class="exp-bullets-inner">
+            <ul>
+              <li>Led cross-functional data pipeline management for <strong>5 nationwide clinical trials</strong>, applying advanced analytics with DOMO to reduce recruitment costs by <strong>75%+</strong>.</li>
+              <li>Championed ETL processes and developed <strong>predictive analytics dashboards</strong> using DOMO to model and forecast campaign outcomes.</li>
+              <li>Contributed to <strong>deep learning models (UNet)</strong> for lung segmentation and nodule detection, achieving 20% accuracy increase and 15% false positive reduction.</li>
+              <li>Engineered software to <strong>automate medical image ingestion</strong>, boosting processing efficiency by 40%.</li>
+              <li>Built Python web apps, <strong>REST APIs</strong> (Django, FastAPI), and data visualization dashboards for medical image analysis.</li>
+              <li>Achieved <strong>93.4% accuracy</strong> in de-identifying DICOM medical images through an OCR-based pipeline.</li>
+            </ul>
+            <div class="exp-tags">
+              <span class="exp-tag">UNet</span><span class="exp-tag">Django</span><span class="exp-tag">FastAPI</span><span class="exp-tag">DOMO</span><span class="exp-tag">DICOM</span><span class="exp-tag">OCR</span>
+            </div>
+          </div></div>
+        </div>
+
+        <!-- Oblogs -->
+        <div class="exp fade-in">
+          <div class="exp-top">
+            <div class="exp-role">AI and NLP Developer</div>
+            <div class="exp-date">Jan 2019 — Jan 2021</div>
+          </div>
+          <div class="exp-org"><strong>Oblogs Private Limited</strong> <span>· Delhi, India · Contract</span></div>
+          <div class="exp-expand" onclick="this.closest('.exp').classList.toggle('open')">
+            <span class="exp-arrow">▸</span> Details
+          </div>
+          <div class="exp-bullets"><div class="exp-bullets-inner">
+            <ul>
+              <li>Built and optimized <strong>NLP pipelines</strong> for named entity recognition, POS tagging, and extractive summarization.</li>
+              <li>Developed custom <strong>SpaCy entity recognition and text classification models</strong> using Keras/TensorFlow, enhancing content automation.</li>
+              <li>Implemented advanced text processing techniques to improve <strong>content research automation</strong> and article summarization.</li>
+            </ul>
+            <div class="exp-tags">
+              <span class="exp-tag">SpaCy</span><span class="exp-tag">Keras</span><span class="exp-tag">TensorFlow</span><span class="exp-tag">NLP</span><span class="exp-tag">NER</span>
+            </div>
+          </div></div>
+        </div>
+      </div>
+
+      <!-- Projects -->
+      <div id="projects-section" style="margin-top: 2rem;">
+        <div class="sec-header fade-in">
+          <h2>Projects</h2>
+          <div class="sec-line"></div>
+        </div>
+
+        <div class="proj-grid">
+          <div class="proj fade-in">
+            <div class="proj-name">Saladicious — AI-Driven Platform</div>
+            <div class="proj-desc">AI salad store using LangChain & GPT-3.5 Turbo for dynamic menu generation, recipe suggestions, QnA chatbot, and collaborative filtering recommendations via Pinecone RAG and K-means clustering.</div>
+            <div class="proj-stack">
+              <span>LangChain</span><span>GPT-3.5</span><span>Pinecone</span><span>RAG</span><span>K-Means</span>
+            </div>
+          </div>
+          <div class="proj fade-in">
+            <div class="proj-name">Sheldon Cooper LLM</div>
+            <div class="proj-desc">Fine-tuned Microsoft phi-2 using LoRA and SFT trainer in PyTorch to replicate Sheldon Cooper's dialogue style. Trained on custom HuggingFace datasets for character-specific responses.</div>
+            <div class="proj-stack">
+              <span>PyTorch</span><span>LoRA</span><span>SFT</span><span>HuggingFace</span><span>phi-2</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <!-- Contact bar at bottom of paper -->
+  <div id="contact" style="padding: 1.25rem 3.5rem; border-top: 2px solid var(--ink); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.75rem; position: relative; z-index:3;">
+    <div style="font-family: 'Cormorant Garamond', serif; font-size: 0.9rem; font-weight: 600; color: var(--ink2);">
+      <span style="color: var(--accent);">Open to opportunities</span> — Let's connect
+    </div>
+    <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+      <a href="mailto:msaishrawan@gmail.com" style="text-decoration:none;font-family:'IBM Plex Mono',monospace;font-size:0.65rem;padding:0.4rem 0.9rem;border-radius:100px;border:1px solid var(--rule);color:var(--ink2);transition:all 0.2s;" onmouseover="this.style.borderColor='var(--accent)';this.style.color='var(--accent)'" onmouseout="this.style.borderColor='var(--rule)';this.style.color='var(--ink2)'">✉ Email</a>
+      <a href="tel:+14387798020" style="text-decoration:none;font-family:'IBM Plex Mono',monospace;font-size:0.65rem;padding:0.4rem 0.9rem;border-radius:100px;border:1px solid var(--rule);color:var(--ink2);transition:all 0.2s;" onmouseover="this.style.borderColor='var(--accent)';this.style.color='var(--accent)'" onmouseout="this.style.borderColor='var(--rule)';this.style.color='var(--ink2)'">☎ Phone</a>
+      <a href="https://linkedin.com/in/shrawansai" target="_blank" style="text-decoration:none;font-family:'IBM Plex Mono',monospace;font-size:0.65rem;padding:0.4rem 0.9rem;border-radius:100px;border:1px solid var(--rule);color:var(--ink2);transition:all 0.2s;" onmouseover="this.style.borderColor='var(--accent)';this.style.color='var(--accent)'" onmouseout="this.style.borderColor='var(--rule)';this.style.color='var(--ink2)'">in LinkedIn</a>
+      <a href="https://github.com/shrawansai" target="_blank" style="text-decoration:none;font-family:'IBM Plex Mono',monospace;font-size:0.65rem;padding:0.4rem 0.9rem;border-radius:100px;border:1px solid var(--rule);color:var(--ink2);transition:all 0.2s;" onmouseover="this.style.borderColor='var(--accent)';this.style.color='var(--accent)'" onmouseout="this.style.borderColor='var(--rule)';this.style.color='var(--ink2)'">⌨ GitHub</a>
+    </div>
+  </div>
+
+</div><!-- end paper -->
+</div><!-- end resume -->
+
+<div style="text-align:center;padding:1.5rem;font-family:'IBM Plex Mono',monospace;font-size:0.6rem;color:var(--ink4);letter-spacing:0.06em;">
+  © 2025 Shrawan Malyala
+</div>
+
+<script>
+  // Scroll reveal
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('show'); obs.unobserve(e.target); }
+    });
+  }, { threshold: 0.06 });
+  document.querySelectorAll('.fade-in').forEach(el => obs.observe(el));
+
+  // Nav hide/show
+  let last = 0;
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    const y = window.scrollY;
+    nav.classList.toggle('hidden', y > last && y > 100);
+    last = y;
+  });
+</script>
+
+</body>
+</html>
